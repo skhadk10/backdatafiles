@@ -26,7 +26,7 @@ export const updateToDo = ({ _id, todo }) => {
       TaskList.findByIdAndUpdate(
         { _id },
         {
-          $set: todo,
+          $set: { todo },
         },
         {
           new: true,

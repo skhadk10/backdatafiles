@@ -27,7 +27,6 @@ router.get('/', async (req, res) => {
 
 // create new task in the database and imported insertlist from tasklists.model
 router.post('/', async (req, res) => {
-  console.log(req.body)
   const result = await insertTask(req.body)
   if (result._id) {
     return res.json({
@@ -43,9 +42,11 @@ router.post('/', async (req, res) => {
 
 // patch method update task form todo to not to do and vice-varsa
 router.patch('/', async (req, res) => {
+  const { todo } = req.body
+  console.log(todo)
   try {
-    const result = await updateToDo(req.body)
-    console.log(result)
+    const result = await updateToDo(todo)
+
     res.json(result)
   } catch (error) {
     res.json({
@@ -57,10 +58,11 @@ router.patch('/', async (req, res) => {
 
 // put method
 router.put('/', async (req, res) => {})
+
 // delete method call function to delete task from database
 router.delete('/', async (req, res) => {
   try {
-    const { ids } = req.body
+    const ids = req.body
     console.log(ids)
     const result = await deleteTasks(ids)
 
@@ -73,7 +75,7 @@ router.delete('/', async (req, res) => {
       })
     }
     res.json({
-      status: 'success',
+      status: 'error',
       message: ' Nothing is deleted',
     })
   } catch (error) {
